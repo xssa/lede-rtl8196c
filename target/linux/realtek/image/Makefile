@@ -78,8 +78,10 @@ define Build/append-cvimg-rootfs
 	$(STAGING_DIR_HOST)/bin/cvimg \
 		-i $(IMAGE_ROOTFS).new \
 		-o $(IMAGE_ROOTFS).new \
-		-e $(CVIMG_ROOTFS_BURN_ADDR) \
-		-b $(CVIMG_ROOTFS_BURN_ADDR) \
+		-e $(if $(CVIMG_ROOTFS_BURN_ADDR),$(CVIMG_ROOTFS_BURN_ADDR),$$(echo -n \
+			$$((($$(stat -c %s $@)/0x1000+1)*0x1000+$(CVIMG_KERNEL_BURN_ADDR))))) \
+		-b $(if $(CVIMG_ROOTFS_BURN_ADDR),$(CVIMG_ROOTFS_BURN_ADDR),$$(echo -n \
+			$$((($$(stat -c %s $@)/0x1000+1)*0x1000+$(CVIMG_KERNEL_BURN_ADDR))))) \
 		-c $(CVIMG_CPU_TYPE) \
 		-t rootfs \
 		$(1) && (dd if=$(IMAGE_ROOTFS).new >> $@ && \
@@ -128,5 +130,17 @@ define Device/au-home-spot-cube
   MTDPARTS := spi0.0:32k(bootloader)ro,-@0x9e000(firmware)
 endef
 TARGET_DEVICES += au-home-spot-cube
+
+define Device/jwnr2000v2
+  DEVICE_TITLE := Netgear JWNR2000 v2
+  BOARDNAME := JVNR2000V2
+  CVIMG_KERNEL_BURN_ADDR := 0x10000
+  CVIMG_ROOTFS_BURN_ADDR :=
+  CONSOLE = ttyS0,38400
+  MTDPARTS := spi0.0:24k(bootloader)ro,8k(art)ro,32k(pot)ro,-@0x10000(firmware)
+  IMAGE/factory.bin = append-kernel | cvimg-kernel | append-cvimg-rootfs | cvimg-pad-rootfs
+  IMAGE/sysupgrade.bin = append-kernel | cvimg-kernel | pad-to 4k | append-rootfs | pad-rootfs
+endef
+TARGET_DEVICES += jwnr2000v2
 
 $(eval $(call BuildImage))
