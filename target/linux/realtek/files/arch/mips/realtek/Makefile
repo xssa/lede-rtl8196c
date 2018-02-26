@@ -28,4 +28,4 @@ obj-y					+= dev-leds-gpio.o
 # Machines
 #
 obj-$(CONFIG_REALTEK_MACH_AU_HOME_SPOT_CUBE)		+= mach-au-home-spot-cube.o
-
+obj-$(CONFIG_REALTEK_MACH_JWNR2000_V2)			+= mach-jwnr2000v2.o

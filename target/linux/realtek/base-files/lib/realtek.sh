@@ -19,6 +19,9 @@ realtek_board_detect() {
 	"AU HOME SPOT CUBE")
 		name="au-home-spot-cube"
 		;;
+	"Netgear JWNR2000 v2")
+		name="jwnr2000v2"
+		;;
 	esac
 
 	[ -z "$name" ] && name="unknown"

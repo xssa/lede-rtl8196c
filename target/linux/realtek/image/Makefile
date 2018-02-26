@@ -133,11 +133,11 @@ TARGET_DEVICES += au-home-spot-cube
 
 define Device/jwnr2000v2
   DEVICE_TITLE := Netgear JWNR2000 v2
-  BOARDNAME := JVNR2000V2
+  BOARDNAME := JWNR2000V2
   CVIMG_KERNEL_BURN_ADDR := 0x10000
   CVIMG_ROOTFS_BURN_ADDR :=
   CONSOLE = ttyS0,38400
-  MTDPARTS := spi0.0:24k(bootloader)ro,8k(art)ro,32k(pot)ro,-@0x10000(firmware)
+  MTDPARTS := spi0.0:32k(boot+hw)ro,32k(pot)ro,-@0x10000(firmware)
   IMAGE/factory.bin = append-kernel | cvimg-kernel | append-cvimg-rootfs | cvimg-pad-rootfs
   IMAGE/sysupgrade.bin = append-kernel | cvimg-kernel | pad-to 4k | append-rootfs | pad-rootfs
 endef

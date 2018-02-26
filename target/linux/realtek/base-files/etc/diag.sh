@@ -11,6 +11,9 @@ get_status_led() {
 	au-home-spot-cube)
 		status_led="au:red:status"
 		;;
+	jwnr2000v2)
+		status_led="ng:green:status"
+		;;
 	esac
 }
 

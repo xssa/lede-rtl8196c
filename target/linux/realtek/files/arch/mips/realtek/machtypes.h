@@ -16,6 +16,7 @@
 enum realtek_mach_type {
 	REALTEK_MACH_GENERIC = 0,
 	REALTEK_MACH_AU_HOME_SPOT_CUBE,
+	REALTEK_MACH_JWNR2000_V2,
 };
 
 #endif /* _REALTEK_MACHTYPE_H */
