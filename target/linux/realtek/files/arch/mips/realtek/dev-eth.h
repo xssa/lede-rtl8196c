@@ -13,6 +13,11 @@
 
 #include <linux/platform_data/re865x.h>
 
+void realtek_init_mac(unsigned char *dst, const unsigned char *src,
+			int offset);
+
 void realtek_register_eth(void);
+
+extern struct re865x_platform_data re865x_data;
 
 #endif /* _REALTEK_DEV_ETH_H */
