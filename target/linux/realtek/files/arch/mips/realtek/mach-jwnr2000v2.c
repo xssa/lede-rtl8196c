@@ -62,6 +62,9 @@ static struct gpio_keys_button ng_gpio_keys[] __initdata = {
 
 static void __init jwnr2000v2_init(void)
 {
+//	u8 *ee = (u8 *) KSEG1ADDR(0x1fc06000);
+	u8 *mac = (u8 *) KSEG1ADDR(0x1fc06007);
+
 	realtek_register_leds_gpio(-1, ARRAY_SIZE(ng_leds_gpio),
 				 ng_leds_gpio);
 	realtek_register_gpio_keys_polled(-1, NG_KEYS_POLL_INTERVAL,
@@ -69,6 +72,8 @@ static void __init jwnr2000v2_init(void)
 					ng_gpio_keys);
 
 	realtek_register_m25p80(NULL);
+	realtek_init_mac(re865x_data.mac_addr, mac, 0);
+
 	realtek_register_eth();
 
 	realtek_set_gpio_control(NG_GPIO_LED_WPS_GREEN, true);
@@ -78,8 +83,10 @@ static void __init jwnr2000v2_init(void)
 
 	realtek_set_gpio_mux(
 		RTL8196C_GPIO_MUX_PCIE_RST |
-/* D9-13 and !D5-D8,D3 are MUXed by GPIOC0, so to use it 
-have to clear GPIOC0 and PORT0-PORT5 here and write simple mux driver */
+/*
+    Bord LEDs D9-D13 and D5-D8,D3 are MUXed by GPIOC0, so to use it
+    have to clear GPIOC0 and PORT0-PORT5 here and write simple mux driver
+*/
 		(RTL8196C_GPIO_MUX_PORT0_MASK << RTL8196C_GPIO_MUX_PORT0_SHIFT) |
 		(RTL8196C_GPIO_MUX_PORT1_MASK << RTL8196C_GPIO_MUX_PORT1_SHIFT) |
 		(RTL8196C_GPIO_MUX_PORT2_MASK << RTL8196C_GPIO_MUX_PORT2_SHIFT) |
