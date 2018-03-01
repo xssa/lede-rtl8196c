@@ -23,6 +23,7 @@ obj-y					+= dev-usb.o
 obj-y					+= dev-eth.o
 obj-y					+= dev-gpio-buttons.o
 obj-y					+= dev-leds-gpio.o
+obj-y					+= dev-wmac.o
 
 #
 # Machines
