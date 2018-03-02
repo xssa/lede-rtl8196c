@@ -1,0 +1,10 @@
+--- a/gas/config/tc-mips.c	2018-03-02 16:15:14.000000000 +0200
++++ b/gas/config/tc-mips.c	2018-03-02 17:24:10.339912573 +0200
+@@ -19633,6 +19633,7 @@ static const struct mips_cpu_info mips_c
+   { "r3000",          0,			ISA_MIPS1,      CPU_R3000 },
+   { "r2000",          0,			ISA_MIPS1,      CPU_R3000 },
+   { "r3900",          0,			ISA_MIPS1,      CPU_R3900 },
++  {"lexra",	      0,			ISA_MIPS1,	CPU_RLX4181}, //xssa: dirty lexra assignment
+   {"lx4180",	      0,			ISA_MIPS1,	CPU_LX4180},
+   {"rlx4181",	      0,			ISA_MIPS1,	CPU_RLX4181},
+   {"rlx4281",	      0,			ISA_MIPS1,	CPU_RLX4281},

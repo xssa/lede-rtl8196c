@@ -1,0 +1,55 @@
+--- a/opcodes/mips-opc.c	2017-10-06 00:15:02.000000000 +0300
++++ b/opcodes/mips-opc.c	2017-10-06 23:11:45.939008737 +0300
+@@ -912,12 +912,12 @@ const struct mips_opcode mips_builtin_op
+ {"lwc2",    "E,A(b)",	0,    (int) M_LWC2_AB,	INSN_MACRO,		0,		I1,		IOCT|IOCTP|IOCT2	},
+ {"lwc3",    "E,o(b)",	0xcc000000, 0xfc000000,	CLD|RD_b|WR_CC,		0,		I1,		IOCT|IOCTP|IOCT2	},
+ {"lwc3",    "E,A(b)",	0,    (int) M_LWC3_AB,	INSN_MACRO,		0,		I1,		IOCT|IOCTP|IOCT2	},
+-{"lwl",     "t,o(b)",	0x88000000, 0xfc000000,	LDD|RD_b|WR_t,		0,		I1	},
+-{"lwl",     "t,A(b)",	0,    (int) M_LWL_AB,	INSN_MACRO,		0,		I1	},
++{"lwl",     "t,o(b)",	0x88000000, 0xfc000000,	LDD|RD_b|WR_t,		0,		I1,		RLXA},
++{"lwl",     "t,A(b)",	0,    (int) M_LWL_AB,	INSN_MACRO,		0,		I1,		RLXA},
+ {"lcache",  "t,o(b)",	0x88000000, 0xfc000000,	LDD|RD_b|WR_t,		0,		I2	}, /* same */
+ {"lcache",  "t,A(b)",	0,    (int) M_LWL_AB,	INSN_MACRO,		0,		I2	}, /* as lwl */
+-{"lwr",     "t,o(b)",	0x98000000, 0xfc000000,	LDD|RD_b|WR_t,		0,		I1	},
+-{"lwr",     "t,A(b)",	0,    (int) M_LWR_AB,	INSN_MACRO,		0,		I1	},
++{"lwr",     "t,o(b)",	0x98000000, 0xfc000000,	LDD|RD_b|WR_t,		0,		I1,		RLXA},
++{"lwr",     "t,A(b)",	0,    (int) M_LWR_AB,	INSN_MACRO,		0,		I1,		RLXA},
+ {"flush",   "t,o(b)",	0x98000000, 0xfc000000,	LDD|RD_b|WR_t,		0,		I2	}, /* same */
+ {"flush",   "t,A(b)",	0,    (int) M_LWR_AB,	INSN_MACRO,		0,		I2	}, /* as lwr */
+ {"fork",    "d,s,t",	0x7c000008, 0xfc0007ff, TRAP|WR_d|RD_s|RD_t,	0,		MT32	},
+@@ -1460,12 +1460,12 @@ const struct mips_opcode mips_builtin_op
+ {"swc2",    "E,A(b)",	0,    (int) M_SWC2_AB,	INSN_MACRO,		0,		I1,		IOCT|IOCTP|IOCT2	},
+ {"swc3",    "E,o(b)",	0xec000000, 0xfc000000,	SM|RD_C3|RD_b,		0,		I1,		IOCT|IOCTP|IOCT2	},
+ {"swc3",    "E,A(b)",	0,    (int) M_SWC3_AB,	INSN_MACRO,		0,		I1,		IOCT|IOCTP|IOCT2	},
+-{"swl",     "t,o(b)",	0xa8000000, 0xfc000000,	SM|RD_t|RD_b,		0,		I1	},
+-{"swl",     "t,A(b)",	0,    (int) M_SWL_AB,	INSN_MACRO,		0,		I1	},
++{"swl",     "t,o(b)",	0xa8000000, 0xfc000000,	SM|RD_t|RD_b,		0,		I1,		RLXA},
++{"swl",     "t,A(b)",	0,    (int) M_SWL_AB,	INSN_MACRO,		0,		I1,		RLXA},
+ {"scache",  "t,o(b)",	0xa8000000, 0xfc000000,	RD_t|RD_b,		0,		I2	}, /* same */
+ {"scache",  "t,A(b)",	0,    (int) M_SWL_AB,	INSN_MACRO,		0,		I2	}, /* as swl */
+-{"swr",     "t,o(b)",	0xb8000000, 0xfc000000,	SM|RD_t|RD_b,		0,		I1	},
+-{"swr",     "t,A(b)",	0,    (int) M_SWR_AB,	INSN_MACRO,		0,		I1	},
++{"swr",     "t,o(b)",	0xb8000000, 0xfc000000,	SM|RD_t|RD_b,		0,		I1,		RLXA},
++{"swr",     "t,A(b)",	0,    (int) M_SWR_AB,	INSN_MACRO,		0,		I1,		RLXA},
+ {"invalidate", "t,o(b)",0xb8000000, 0xfc000000,	RD_t|RD_b,		0,		I2	}, /* same */
+ {"invalidate", "t,A(b)",0,    (int) M_SWR_AB,	INSN_MACRO,		0,		I2	}, /* as swr */
+ {"swxc1",   "S,t(b)",   0x4c000008, 0xfc0007ff, SM|RD_S|RD_t|RD_b|FP_S,	0,		I4_33	},
+@@ -1534,14 +1534,14 @@ const struct mips_opcode mips_builtin_op
+ {"ulh",     "t,A(b)",	0,    (int) M_ULH_A,	INSN_MACRO,		0,		I1	},
+ {"ulhu",    "t,o(b)",	0,    (int) M_ULHU,	INSN_MACRO,		0,		I1	},
+ {"ulhu",    "t,A(b)",	0,    (int) M_ULHU_A,	INSN_MACRO,		0,		I1	},
+-{"ulw",     "t,o(b)",	0,    (int) M_ULW,	INSN_MACRO,		0,		I1	},
+-{"ulw",     "t,A(b)",	0,    (int) M_ULW_A,	INSN_MACRO,		0,		I1	},
++{"ulw",     "t,o(b)",	0,    (int) M_ULW,	INSN_MACRO,		0,		I1,		RLXA},
++{"ulw",     "t,A(b)",	0,    (int) M_ULW_A,	INSN_MACRO,		0,		I1,		RLXA},
+ {"usd",     "t,o(b)",	0,    (int) M_USD,	INSN_MACRO,		0,		I3	},
+ {"usd",     "t,A(b)",	0,    (int) M_USD_A,	INSN_MACRO,		0,		I3	},
+ {"ush",     "t,o(b)",	0,    (int) M_USH,	INSN_MACRO,		0,		I1	},
+ {"ush",     "t,A(b)",	0,    (int) M_USH_A,	INSN_MACRO,		0,		I1	},
+-{"usw",     "t,o(b)",	0,    (int) M_USW,	INSN_MACRO,		0,		I1	},
+-{"usw",     "t,A(b)",	0,    (int) M_USW_A,	INSN_MACRO,		0,		I1	},
++{"usw",     "t,o(b)",	0,    (int) M_USW,	INSN_MACRO,		0,		I1,		RLXA},
++{"usw",     "t,A(b)",	0,    (int) M_USW_A,	INSN_MACRO,		0,		I1,		RLXA},
+ {"v3mulu",  "d,v,t",	0x70000011, 0xfc0007ff, WR_d|RD_s|RD_t,		0,		IOCT	},
+ {"vmm0",    "d,v,t",	0x70000010, 0xfc0007ff, WR_d|RD_s|RD_t,		0,		IOCT	},
+ {"vmulu",   "d,v,t",	0x7000000f, 0xfc0007ff, WR_d|RD_s|RD_t,		0,		IOCT	},
