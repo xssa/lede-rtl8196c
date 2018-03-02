@@ -25,6 +25,19 @@ GCC_VERSION:=$(call qstrip,$(CONFIG_GCC_VERSION))
 PKG_VERSION:=$(firstword $(subst +, ,$(GCC_VERSION)))
 GCC_DIR:=$(PKG_NAME)-$(PKG_VERSION)
 
+ifeq ($(findstring linaro, $(CONFIG_GCC_VERSION)),linaro)
+    ifeq ($(CONFIG_GCC_VERSION),"4.8-linaro")
+      PKG_REV:=4.8-2014.04
+      PKG_VERSION:=4.8.3
+      PKG_VERSION_MAJOR:=4.8
+      PKG_MD5SUM:=5ba2f3a449b1658ccc09d27cc7ab3c03
+      PKG_COMP:=xz
+    endif
+    PKG_SOURCE_URL:=http://launchpad.net/gcc-linaro/$(PKG_VERSION_MAJOR)/$(PKG_REV)/+download/
+    PKG_SOURCE:=$(PKG_NAME)-linaro-$(PKG_REV).tar.$(PKG_COMP)
+    GCC_DIR:=gcc-linaro-$(PKG_REV)
+    HOST_BUILD_DIR:=$(BUILD_DIR_TOOLCHAIN)/$(GCC_DIR)
+else
 PKG_SOURCE_URL:=@GNU/gcc/gcc-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 
@@ -44,6 +57,7 @@ ifneq ($(CONFIG_GCC_VERSION_4_8_ARC),)
     PKG_REV:=2016.03
     GCC_DIR:=gcc-arc-$(PKG_REV)
     HOST_BUILD_DIR = $(BUILD_DIR_HOST)/$(PKG_NAME)-$(GCC_VERSION)
+endif
 endif
 
 PATCH_DIR=../patches/$(GCC_VERSION)

@@ -1,0 +1,30 @@
+--- a/gcc/config/mips/mips-cpus.def	2013-01-10 22:38:27.000000000 +0200
++++ b/gcc/config/mips/mips-cpus.def	2017-08-22 00:29:33.676781560 +0300
+@@ -52,6 +52,13 @@
+ MIPS_CPU ("r3000", PROCESSOR_R3000, 1, 0)
+ MIPS_CPU ("r2000", PROCESSOR_R3000, 1, 0)
+ MIPS_CPU ("r3900", PROCESSOR_R3900, 1, 0)
++MIPS_CPU ( "lexra", PROCESSOR_RLX4181, 1, 0 )
++MIPS_CPU ( "lx4180", PROCESSOR_LX4180, 1, 0 )
++MIPS_CPU ( "rlx4181", PROCESSOR_RLX4181, 1, 0 )
++MIPS_CPU ( "rlx4281", PROCESSOR_RLX4281, 1, 0 )
++MIPS_CPU ( "rlx5181", PROCESSOR_RLX5181, 1, 0 )
++MIPS_CPU ( "lx5280", PROCESSOR_LX5280, 1, 0 )
++MIPS_CPU ( "rlx5281", PROCESSOR_RLX5281, 1, 0 )
+ 
+ /* MIPS II processors.  */
+ MIPS_CPU ("r6000", PROCESSOR_R6000, 2, 0)
+
+--- a/gcc/config/mips/genopt.sh       2013-01-10 22:38:27.000000000 +0200
++++ b/gcc/config/mips/genopt.sh   2017-08-24 15:54:25.595359770 +0300
+@@ -101,6 +101,10 @@
+     cname = name
+     if (cname ~ "^vr") {
+ 	sub("^vr", "", cname)
++    } else if (cname ~ "^rlx") {
++	sub("^rlx", "", cname)
++    } else if (cname ~ "^lx") {
++	sub("^lx", "", cname)	
+     } else if (cname ~ "^rm") {
+ 	sub("^rm", "", cname)
+     } else if (cname ~ "^r") {

@@ -20,6 +20,11 @@ choice
 		bool "gcc 6.x"
 		depends on !arc
 
+	config GCC_USE_VERSION_4_8_LINARO
+		select GCC_VERSION_4_8_LINARO
+		bool "gcc 4.8.x with Linaro enhancements"
+		depends on !arc
+
 endchoice
 
 config GCC_USE_GRAPHITE
